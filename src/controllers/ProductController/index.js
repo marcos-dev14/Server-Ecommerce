@@ -1,0 +1,84 @@
+const Product = require('../../models/Product');
+const User = require('../../models/User');
+
+const ProductController = {
+  // Função para criar produtos
+  async createProduct(req, res) {
+    const bodyData = req.body;
+    const { user_id } = req.params;
+
+    try {
+      const data = { username: user_id, ...bodyData };
+
+      const newProduct = await Product.create(data);
+
+      return res.status(200).json(newProduct);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
+
+  // Função para listar todos os produtos de um usuário especifico
+  async getUserProducts(req, res) {
+    const { user_id } = req.params;
+
+    try {
+      const productsOfAnUser = await Product.find({ username: user_id });
+      return res.status(200).json(productsOfAnUser);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
+
+  // Função para atualizar um produto especifico
+  async updateProduct(req, res) {
+    const bodyData = req.body;
+    const { product_id, user_id } = req.params;
+
+    try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        product_id,
+        bodyData,
+        { new: true }
+      );
+      return res.status(200).json(updatedProduct);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
+
+  // Função para deletar um produto especifico
+  async deleteProduct(req, res) {
+    const { product_id, user_id } = req.params;
+
+    try {
+      const deletedProduct = await Product.findByIdAndDelete(product_id);
+      return res.status(200).json(deletedProduct);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
+
+  // Função para listar todos os produtos
+  async getProducts(req, res) {
+    try {
+      const products = await Product.find();
+      return res.status(200).json(products);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
+
+  // Função para listar um produto especifico
+  async getProductById(req, res) {
+    const { product_id } = req.params;
+    try {
+      const product = await Product.findById(product_id);
+      return res.status(200).json(product);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
+};
+
+module.exports = ProductController;
