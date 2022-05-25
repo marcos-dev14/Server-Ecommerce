@@ -28,8 +28,8 @@ routes.delete(
 routes.patch('/products/:user_id/:product_id', ProductController.updateProduct); // Rota para atualizar os dados do produto
 routes.get('/products/:product_id/', ProductController.getProductById); // Rota para listar o produto especifico
 
-routes.post('/cart/:user_id', CartController.createCart); // Rota adicionar os produtos no carrinho
-routes.get('/cart/:user_id', CartController.getUserCart); // Rota para listar os produtos do usuário
-routes.get('/cart/:user_id/:cart_id', CartController.getCart); // Rota para pegar o produto no carrinho especifico
+routes.post('/carts/:user_id', CartController.createCart); // Rota adicionar os produtos no carrinho
+routes.get('/carts/:user_id', CartController.getUserCart); // Rota para listar os produtos do usuário
+routes.get('/carts/:user_id/:cart_id', CartController.getCart); // Rota para pegar o produto no carrinho especifico
 
 module.exports = routes;
